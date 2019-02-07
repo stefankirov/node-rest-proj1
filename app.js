@@ -13,19 +13,16 @@ const customerRoutes = require('./api/routes/customers');
 //process.env.MONGO_ATLAS_PW
 //hardcoding for now
 mongoose.connect(
-	//'mongodb+srv://noderestshop:noderestshop@node-rest-shop-rkdhk.azure.mongodb.net/test', //, ?retryWrites=true
-	//"mongodb://noderestshop:noderestshop@node-rest-shop-shard-00-00-rkdhk.azure.mongodb.net:27017,node-rest-shop-shard-00-01-rkdhk.azure.mongodb.net:27017,node-rest-shop-shard-00-02-rkdhk.azure.mongodb.net:27017/test?ssl=true&replicaSet=node-rest-shop-shard-0&authSource=admin",
-	"mongodb://noderestshop1:noderestshop1@cluster0-shard-00-00-irxqm.mongodb.net:27017,cluster0-shard-00-01-irxqm.mongodb.net:27017,cluster0-shard-00-02-irxqm.mongodb.net:27017/noderestshop1?ssl=true&replicaSet=Cluster0-shard-0",
+	"mongodb+srv://noderestshop1:noderestshop1@cluster0-irxqm.mongodb.net/test?retryWrites=true",
 	{
-		useMongoClient: true
-		//useNewUrlParser: true	
+		useNewUrlParser: true	
 	}
 );
 mongoose.Promise = global.Promise;
 
-
 //utils
 app.use(morgan('dev'));
+app.use( '/uploads' ,express.static('uploads')); //making uploads folder available publicly
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 

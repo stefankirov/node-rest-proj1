@@ -2,7 +2,7 @@
   "name": "rest-shop",
   "version": "1.0.0",
   "description": "tutorial",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },

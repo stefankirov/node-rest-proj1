@@ -133,15 +133,6 @@ router.patch('/:getByCustomerId', (req, res, next) => {
     });
  
 });
-/* 
-router.delete('/:productId', (req, res, next) => {
-   
-    res.status(200).json({
-        message: 'Deleted  Product',
-       
-    });
-});
- */
  
 
 module.exports = router;

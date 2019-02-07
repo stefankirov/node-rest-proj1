@@ -16,12 +16,12 @@ router.get('/', (req, res, next) => {
             count: docs.length,
             orders: docs.map(doc => {
                 return {
-                    _Id: doc._Id,
-                    product: doc.productId,
+                    _id: doc._id,
+                    product: doc.product,
                     quantity: doc.quantity,
                     request: {
                         type: 'GET',
-                        url: 'http://localhost:3000/orders/' + doc._Id
+                        url: 'http://localhost:3000/orders/' + doc._id
                     }
                 }
             })
@@ -38,15 +38,15 @@ router.get('/', (req, res, next) => {
 router.post('/', (req,res,next) => {
     //before adding an order check if product exists
     Product.findById(req.body.productId)
-        .then(product => {
-            if (!product) {
+         .then(product => {
+           if (!product) {
                 return res.status(404).json({
                     mesaage: 'Product Not found'
                 })
             }
             //create & save order
             const order = new Order ({
-                _Id: mongoose.Types.ObjectId(),
+                _id: mongoose.Types.ObjectId(),
                 quantity: req.body.quantity,
                 product: req.body.productId
             });
@@ -58,13 +58,13 @@ router.post('/', (req,res,next) => {
             res.status(201).json({
                 message: 'Order stored',
                 createdOrder: {
-                    _id: result._Id,
+                    _id: result._id,
                     product: result.product,
                     quantity: result.quantity
                 },
                 request: {
                     type: 'GET',
-                    url: 'http://localhost:3000/orders/' + result._Id
+                    url: 'http://localhost:3000/orders/' + result._id
                 }
             });
         })

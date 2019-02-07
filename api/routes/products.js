@@ -1,36 +1,66 @@
 const express =require('express');
 const router = express.Router();
 
+//import and initialize multer for file upload
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb){
+        cb(null, new Date().toDateString() + file.originalname);
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    //allow only jpeg and png files. 
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+        cb(null, true);
+    }else{
+        cb(null, false);
+    }
+    
+   
+};
+
+const upload = multer({
+    storage:storage, 
+    limits: {
+    fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+});
 
 //import Schema db
 const mongoose = require('mongoose');
 const Product = require('../models/product');
 
 //https requests
-const https = require('https');
+//const https = require('https');
 
 router.get('/', (req, res, next) => {
-Product.find()
-    .select('name, price, _id')  //selecting what data to fetch
+    Product
+    .find()
+    .select('name price _id productImage')  //selecting what data to fetch
     .exec()
     .then(docs => {
         //console.log(docs);
         //preparing our more useful response
-        const response = {
-            count: docs.length,
-            products: docs.map()(doc => {
-                return{
-                    name: doc.name,
-                    price: doc.price,
-                    _id: doc._id,
-                    request: {
-                        type: 'GET',
-                        url: 'http://localhost:3000/products/' + doc._id //e.g. dynamicaly can setup this as you wish
+        res.status(200).json({
+                count: docs.length,
+                products: docs.map(doc => {
+                    return{
+                        name: doc.name,
+                        price: doc.price,
+                        productImage: doc.productImage,
+                        _id: doc._id,
+                        request: {
+                            type: 'GET',
+                            url: 'http://localhost:3000/products/' + doc._id //e.g. dynamicaly can setup this as you wish
+                        }
                     }
-                }
-            })
-        };
-
+                })
+            });
         //add check to handle scenarios with results & no results
         // if (docs.length >= 0){          
         // }else{
@@ -40,7 +70,6 @@ Product.find()
         //         }
         //     );
         // }
-        res.status(200).json(response);
     })
     .catch(err => {
         console.log(err);
@@ -52,37 +81,39 @@ Product.find()
 });
 
 
-router.post('/', (req,res,next) => {
- /*    const product = {
-        name: req.body.name,
-        price: req.body.price
-    }; */
+router.post('/', upload.single('productImage'), (req,res,next) => {
+    console.log(req.file);
     console.log(mongoose.connection.readyState);
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
-        price: req.body.price
+        price: req.body.price,
+        productImage: req.file.path
     });
-    product.save()
+    product
+        .save()
         .then(result => {
-        console.log(result);
+        //console.log(result);
+        res.status(201).json({
+            message : 'Created product Successfully',
+            createdProduct: {
+                name: result.name,
+                price: result.price,
+                _id: result.id,
+                request : {
+                    type: "GET",
+                    url: "http://localhost:3000/products/" + result.id
+                }
+            }
+        });
     })
     .catch(err => {
-        console.log(err)
+        console.log(err);
+        //error response
+        res.status(500).json({error: err});
     });
 
-    res.status(201).json({
-        message : 'Created product Successfully',
-        createdProduct: {
-            name: result.name,
-            price: result.price,
-            _id: result.id,
-            request : {
-                type: "GET",
-                url: "http://localhost:3000/products/" + result.id
-            }
-        }
-    });
+   
     console.log(mongoose.connection.readyState);
 });
 
@@ -90,7 +121,7 @@ router.get('/:productId', (req, res, next) => {
     console.log(mongoose.connection.readyState);
     const id = req.params.productId;
     Product.findById(id)
-    .select('name, price, _id')  //selecting what dtata to fetch
+    .select('name price _id productImage')  //selecting what dtata to fetch
     .exec()
     .then(doc => {
         console.log("From Database", doc);
@@ -128,7 +159,7 @@ router.patch('/:productId', (req, res, next) => {
     Product.update({_id: id}, {$set: updateOps })
     .exec()
     .then(result => {
-       //console.log(result);
+       console.log(result);
         res.status(200).json({
             message: 'Product Updated',
             request: {
@@ -147,9 +178,10 @@ router.patch('/:productId', (req, res, next) => {
 
 router.delete('/:productId', (req, res, next) => {
    const id = req.params.productId;
-    Product.remove({_id: id})
+    Product
+        .deleteOne({_id: id})
         .exec()
-        .then(res =>{
+        .then(result => {
             res.status(200).json({
                 message: 'Product Deleted',
                 request: {
@@ -170,29 +202,3 @@ router.delete('/:productId', (req, res, next) => {
  
 
 module.exports = router;
-
-
- //remove this - not secure
- /*        process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-        https.get('https://auroraws-dev.mgmresorts.local/tpws/customer/itineraryByRoomConfirmationNumber?request={"confirmationNumber":"M02871502",%20"cacheonly":false}', (resp) => {
-            let data = '';
-          
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-              data += chunk;
-            });
-          
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-              console.log(JSON.parse(data).itinerary);
-              let responseData = JSON.parse(data).itinerary;
-                res.status(200).json({
-                    itinerary: responseData,
-        
-                });
-            });
-          
-          }).on("error", (err) => {
-            console.log("Error: " + err.message);
-          }); */
-        
