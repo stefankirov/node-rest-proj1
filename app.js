@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+const userRoutes = require('./api/routes/users');
 
 const itineraryRoutes = require('./api/routes/itineraries');
 const customerRoutes = require('./api/routes/customers');
@@ -47,6 +48,7 @@ app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/itineraries', itineraryRoutes);
 app.use('/customers', customerRoutes);
+app.use('/users', userRoutes);
 
 app.use((req, respo, next) => {
 	const error = new Error('Not found');
