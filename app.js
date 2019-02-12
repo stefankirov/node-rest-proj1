@@ -8,6 +8,8 @@ const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/users');
 
+const searchRoutes = require('./api/routes/search');
+
 const itineraryRoutes = require('./api/routes/itineraries');
 const customerRoutes = require('./api/routes/customers');
 //db should be ENV pass & user & connection string
@@ -49,6 +51,7 @@ app.use('/orders', orderRoutes);
 app.use('/itineraries', itineraryRoutes);
 app.use('/customers', customerRoutes);
 app.use('/users', userRoutes);
+app.use('/search', searchRoutes);
 
 app.use((req, respo, next) => {
 	const error = new Error('Not found');

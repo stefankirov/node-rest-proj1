@@ -136,7 +136,7 @@ router.get('/:productId', (req, res, next) => {
                 }
             });
         }else {
-            res.status(404).json({messgae: "No valid entry provided for id"});
+            res.status(404).json({message: "No valid entry provided for id"});
         }
 
     })

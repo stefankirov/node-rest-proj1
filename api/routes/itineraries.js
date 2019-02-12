@@ -104,33 +104,8 @@ router.get('/:confNo', (req, res, next) => {
     }
 });
 
-router.patch('/:getByCustomerId', (req, res, next) => {
-   
-    Order.find()
-    .select('product quantity _id')
-    .populate('product','name') //chaining populating of data for the refernce property PRODUCT. e.g. getting  some info from product table. 
-    .exec() 
-    .then(docs => {
-        res.status(200).json({
-            count: docs.length,
-            orders: docs.map(doc => {
-                return {
-                    _Id: doc._Id,
-                    product: doc.productId,
-                    quantity: doc.quantity,
-                    request: {
-                        type: 'GET',
-                        url: 'http://localhost:3000/orders/' + doc._Id
-                    }
-                }
-            })
-        });
-    })
-    .catch(err => {
-        res.status(500).json({
-            error: err
-        })
-    });
+router.get('/:getByCustomerId', (req, res, next) => {
+   //not implemented
  
 });
  
