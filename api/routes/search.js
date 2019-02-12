@@ -9,9 +9,6 @@ const EntitySearchAPIClient = require('azure-cognitiveservices-entitysearch');
 let credentials = new CognitiveServicesCredentials('3443cc2f77f244ccb4a1f6789b659470'); //ACCESS_KEY
 let entitySearchApiClient = new EntitySearchAPIClient(credentials);
 
-
-
-
 router.get('/:query', (req, res, next) => {
     let queryText = req.params.query;
     if (queryText == "") {

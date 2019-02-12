@@ -3,6 +3,8 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+//const swaggerUi = require('swagger-ui-express');
+//const swaggerDocument = require('./swagger.json');
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
@@ -22,12 +24,17 @@ mongoose.connect(
 	}
 );
 mongoose.Promise = global.Promise;
+console.log("# Loading app.js");
 
 //utils
 app.use(morgan('dev'));
 app.use( '/uploads' ,express.static('uploads')); //making uploads folder available publicly
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+//adding Swagger
+//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+//app.use('/api/v1', router);
 
 //replace '*' to give access to specific url only
 app.use((res, req, next) => {
@@ -54,6 +61,7 @@ app.use('/users', userRoutes);
 app.use('/search', searchRoutes);
 
 app.use((req, respo, next) => {
+	console.log("# invalid route: "+ req.path);
 	const error = new Error('Not found');
 	error.status=404;
 	next(error);
