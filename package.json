@@ -4,7 +4,7 @@
   "description": "tutorial",
   "main": "server.js",
   "scripts": {
-  
+    "start": "nodemon server.js"
   },
   "keywords": [
     "node",
@@ -20,6 +20,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "git": "^0.1.5",
+    "jsonwebtoken": "^8.5.0",
     "moment": "^2.24.0",
     "mongoose": "^5.4.9",
     "morgan": "^1.9.1",

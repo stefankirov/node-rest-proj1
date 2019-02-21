@@ -1,68 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const bcryptjs = require ('bcryptjs') 
+const UserController = require('../controllers/users');
+const checkAuth = require('../middleware/check-auth');
 
-const User = require('../models/user');
+//routes
+router.post('/signup', UserController.users_create_signup);
 
-router.post('/signup', (req,res,next) => {
-    User.find({email: req.body.email})
-    .exec()
-    .then(user => {
-        if(user.length >= 1){
-            return res.status(409).json({
-                message: "Email exists."
-            });
-        }else{
-             //create hashed password
-        bcryptjs.hash(req.body.email, 10, (err, hash) => {
-        if (err){
-            return res.status(500).json({
-                error: err        
-            });
-        }else{
-            const user = new User({
-                _id: new mongoose.Types.ObjectId(),
-                email: req.body.email,
-                password: hash
-                });
-                user
-                .save()
-                .then(result => {
-                    console.log(result);
-                    res.status(201).json({
-                        message: "User Created."
-                    })
-                })
-                .catch(err => {
-                    console.log(err);
-                    res.status(500).json({
-                        error: err
-                    });
-                });    
-            }
-   
-        })  
-        }
-    })
+router.post("/login", UserController.users_login);
 
-   
-});
- 
-router.delete("/:userId", (req, res, next) => {
-    User.remove({_id: req.params.id})
-    .exec()
-    .then(result => {
-        res.status(200).json({
-            message : "User Deleted."
-        });
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({
-            error: err
-        });
-    });
-});
+//TODO, here any user can delete another user
+//App does not have granular role permissions controls
+router.delete("/:userId", checkAuth, UserController.users_delete_user);
+
 
 module.exports = router;
