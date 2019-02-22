@@ -1,3 +1,16 @@
 # node-rest-proj1
-# Continuous integration from master to:
-https://node-rest-proj1.azurewebsites.net
+# Azure web app service deployed at: 
+https://node-rest-proj4.azurewebsites.net/
+
+# Documentation created with Postman at:
+https://documenter.getpostman.com/view/6595853/S11EvfdR
+
+# Image folder at:
+/uploads
+
+# User Signup
+
+# Auth token with JWT
+
+# Others: MongoDB Atlas NoSQL, Express
+

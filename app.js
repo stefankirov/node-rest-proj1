@@ -3,20 +3,16 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-//const swaggerUi = require('swagger-ui-express');
-//const swaggerDocument = require('./swagger.json');
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/users');
-
 const searchRoutes = require('./api/routes/search');
-
 const itineraryRoutes = require('./api/routes/itineraries');
 const customerRoutes = require('./api/routes/customers');
-//db should be ENV pass & user & connection string
+//TODO db should be ENV pass & user & connection string
 //process.env.MONGO_ATLAS_PW
-//hardcoding for now
+//hard coding for now
 mongoose.connect(
 	"mongodb+srv://noderestshop1:noderestshop1@cluster0-irxqm.mongodb.net/test?retryWrites=true",
 	{
@@ -28,13 +24,9 @@ console.log("# Loading app.js");
 
 //utils
 app.use(morgan('dev'));
-app.use( '/uploads' ,express.static('uploads')); //making uploads folder available publicly
+app.use( '/uploads' , express.static('uploads')); //making uploads folder available publicly
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
-//adding Swagger
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-//app.use('/api/v1', router);
 
 //replace '*' to give access to specific url only
 app.use((res, req, next) => {
@@ -76,11 +68,5 @@ app.use((error,req,res,next) => {
 	});
 });
 
-/* app.use((req, res, next) => {
-	res.status(200).json({
-		message: "It works!"
-	});
-
-}); */
 
 module.exports = app;
