@@ -13,7 +13,7 @@ module.exports = (req, res, next) =>{
         try {
             const token = req.header.authorization.split(" ")[1];
             console.log(token);
-            const decoded = jwt.verify(token, "secret"); //should get secret key from ENV
+            const decoded = jwt.verify("mysecretkey"); //token, process.env.JWT_PRIVATE_KEY
             req.userData = decoded;
             next();
         } catch (error) {

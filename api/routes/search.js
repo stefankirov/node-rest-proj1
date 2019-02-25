@@ -6,7 +6,7 @@ const router = express.Router();
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 const EntitySearchAPIClient = require('azure-cognitiveservices-entitysearch');
 
-let credentials = new CognitiveServicesCredentials('3443cc2f77f244ccb4a1f6789b659470'); //ACCESS_KEY
+let credentials = new CognitiveServicesCredentials("3443cc2f77f244ccb4a1f6789b659470"); //process.env.BING_COGNITIVE_SERVICES_KEY
 let entitySearchApiClient = new EntitySearchAPIClient(credentials);
 
 router.get('/:query', (req, res, next) => {

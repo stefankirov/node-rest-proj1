@@ -3,6 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
@@ -14,11 +15,14 @@ const customerRoutes = require('./api/routes/customers');
 //process.env.MONGO_ATLAS_PW
 //hard coding for now
 mongoose.connect(
-	"mongodb+srv://noderestshop1:noderestshop1@cluster0-irxqm.mongodb.net/test?retryWrites=true",
+	"mongodb+srv://noderestshop1:" +
+	"noderestshop1" + //process.env.MONGO_DB_ACCESS_KEY +
+	"@cluster0-irxqm.mongodb.net/test?retryWrites=true",
 	{
 		useNewUrlParser: true	
 	}
 );
+
 mongoose.Promise = global.Promise;
 console.log("# Loading app.js");
 
@@ -38,7 +42,7 @@ app.use((res, req, next) => {
 	if(req.method === 'OPTIONS') {
 		//whatever you want to support with your API
 		res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-		return res.stattus(200).json({});
+		return res.status(200).json({});
 	}
 	//telling the server code to continue
 	next();
@@ -51,12 +55,20 @@ app.use('/itineraries', itineraryRoutes);
 app.use('/customers', customerRoutes);
 app.use('/users', userRoutes);
 app.use('/search', searchRoutes);
+//enable public access to the folder
+app.use('/uploads', express.static(__dirname  + '/uploads'));
 
-app.use((req, respo, next) => {
-	console.log("# invalid route: "+ req.path);
-	const error = new Error('Not found');
-	error.status=404;
-	next(error);
+app.use((req, res, next) => {
+
+	if (req.path && req.path == '/'){
+		return res.status(200).json({
+			message: "https://documenter.getpostman.com/view/6595853/S11EvfdR"
+		});
+	}else{
+		const error = new Error('Not found');
+		error.status=404;
+		next(error);
+	}
 });
 
 app.use((error,req,res,next) => {

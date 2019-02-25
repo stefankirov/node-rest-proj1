@@ -6,5 +6,3 @@ const server = http.createServer(app);
 
 console.log("# Creted Server at port:  " + port);  
 server.listen(port);
-
-
