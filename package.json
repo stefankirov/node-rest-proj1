@@ -4,7 +4,6 @@
   "description": "tutorial",
   "main": "server.js",
   "scripts": {
-    
     "start_azure_debug": "node --inspect=0.0.0.0:$APPSVC_TUNNEL_PORT index.js"
   },
   "keywords": [
@@ -15,6 +14,7 @@
   "author": "stefan kirov",
   "license": "ISC",
   "dependencies": {
+    "applicationinsights": "^1.2.0",
     "aws-sdk": "^2.394.0",
     "azure-cognitiveservices-entitysearch": "^2.0.0",
     "bcryptjs": "^2.4.3",

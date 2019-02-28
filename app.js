@@ -26,6 +26,11 @@ mongoose.connect(
 mongoose.Promise = global.Promise;
 console.log("# Loading app.js");
 
+//plugging app insights for Azure
+const appInsights = require("applicationinsights");
+appInsights.setup("ae24c5fe-06e7-4a85-9f3f-04ed7899db36");
+appInsights.start();
+
 //utils
 app.use(morgan('dev'));
 app.use( '/uploads' , express.static('uploads')); //making uploads folder available publicly
