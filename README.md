@@ -8,9 +8,13 @@ https://documenter.getpostman.com/view/6595853/S11EvfdR
 # Image folder at:
 /uploads
 
-# User Signup
+# User Signup & login
 
 # Auth token with JWT
 
 # Others: MongoDB Atlas NoSQL, Express
+
+# Azure AppInsights are enabled
+
+
 
