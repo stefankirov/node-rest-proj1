@@ -1,3 +1,6 @@
+//key vault//
+
+
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -67,7 +70,9 @@ app.use((req, res, next) => {
 
 	if (req.path && req.path == '/'){
 		return res.status(200).json({
-			message: "https://documenter.getpostman.com/view/6595853/S11EvfdR"
+			data: "https://documenter.getpostman.com/view/6595853/S11EvfdR",
+			version: "0.1"
+
 		});
 	}else{
 		const error = new Error('Not found');
