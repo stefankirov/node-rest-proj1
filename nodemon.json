@@ -2,6 +2,7 @@
     "env" : {
         "MONGO_DB_ACCESS_KEY": "noderestshop1",
         "JWT_PRIVATE_KEY": "mysecretkey",
-        "BING_COGNITIVE_SERVICES_KEY": "3443cc2f77f244ccb4a1f6789b659470"
+        "BING_COGNITIVE_SERVICES_KEY": "3443cc2f77f244ccb4a1f6789b659470",
+        "APP_INSIGHTS_KEY": "3443cc2f77f244ccb4a1f6789b659470"
     }
 }
