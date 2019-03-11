@@ -71,7 +71,7 @@ app.use((req, res, next) => {
 	if (req.path && req.path == '/'){
 		return res.status(200).json({
 			data: "https://documenter.getpostman.com/view/6595853/S11EvfdR",
-			version: "0.1"
+			version: "0.2"
 
 		});
 	}else{
