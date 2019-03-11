@@ -1,9 +1,11 @@
+/* This whole file is TODO POC for another project */
+
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const https = require('https');
 
-const auroraTpwsBaseUrl = 'https://auroraws-qa.mgmresorts.local/tpws/';
+const auroraTpwsBaseUrl = 'https://auroraws-dev.mgmresorts.local/tpws/';
 
 router.get('/', (req, res, next) => {
     res.status(200).json({

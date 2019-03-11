@@ -1,3 +1,5 @@
+/* This whole file is TODO POC for another project */
+
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -10,13 +12,13 @@ const https = require('https');
 //M0221E3E1
 //const customerSearchById = "https://auroraws-dev.mgmresorts.local/tpws/customer/search?request={%22key%22:{%22mlifeNo%22:%2274068246%22,%22cacheOnly%22:false}}";
 //const customerSearchByMlifeNo = "https://auroraws-dev.mgmresorts.local/tpws/customer/search?request={key:{mlifeNo:74068246,cacheOnly:false}}";
-//const getItineraryByConfirmationNumber = 'https://auroraws-qa.mgmresorts.local/tpws/customer/itineraryByRoomConfirmationNumber?request={"confirmationNumber":"' + id +'","cacheonly":false}';
+//const getItineraryByConfirmationNumber = 'https://auroraws-dev.mgmresorts.local/tpws/customer/itineraryByRoomConfirmationNumber?request={"confirmationNumber":"' + id +'","cacheonly":false}';
 //const customerSearchById = "https://auroraws-dev.mgmresorts.local/tpws/customer/search?request={%22key%22:{%22mlifeNo%22:%2274068246%22,%22cacheOnly%22:false}}";
 //const customerSearchByMlifeNo = "https://auroraws-dev.mgmresorts.local/tpws/customer/search?request={key:{mlifeNo:74068246,cacheOnly:false}}";
-//const getItineraryByConfirmationNumber = 'https://auroraws-qa.mgmresorts.local/tpws/customer/itineraryByRoomConfirmationNumber?request={"confirmationNumber":"' + id +'","cacheonly":false}';
+//const getItineraryByConfirmationNumber = 'https://auroraws-dev.mgmresorts.local/tpws/customer/itineraryByRoomConfirmationNumber?request={"confirmationNumber":"' + id +'","cacheonly":false}';
 
 //all this should be configurable 
-const auroraTpwsBaseUrl = 'https://auroraws-qa.mgmresorts.local/tpws/'
+const auroraTpwsBaseUrl = 'https://auroraws-dev.mgmresorts.local/tpws/'
 
 router.get('/', (req, res, next) => {
     res.status(200).json({

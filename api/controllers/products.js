@@ -19,7 +19,7 @@ exports.products_get_all  = (req, res, next) => {
                         _id: doc._id,
                         request: {
                             type: 'GET',
-                            url: 'http://localhost:3000/products/' + doc._id //e.g. dynamicaly can setup this as you wish
+                            url: req.protocol + '://' + req.get('host') + '/products/' + doc._id,
                         }
                     }
                 })
@@ -63,7 +63,7 @@ exports.products_create_product = (req,res,next) => {
                 _id: result.id,
                 request : {
                     type: "GET",
-                    url: "http://localhost:3000/products/" + result.id
+                    url: req.protocol + '://' + req.get('host') +  '/products/' + result.id
                 }
             }
         });
@@ -90,7 +90,7 @@ exports.products_get_product = (req, res, next) => {
                 request: {
                     type: 'GET',
                     description: 'GET_ALL_PRODUCTS',
-                    url: 'http://localhost:3000/products'     
+                    url: req.protocol + '://' + req.get('host') + '/products'     
                 }
             });
         }else {
@@ -119,7 +119,7 @@ exports.products_update_product = (req, res, next) => {
             message: 'Product Updated',
             request: {
                 type: 'GET',
-                url: 'http://localhost:3000/products/' + id
+                url: req.protocol + '://' + req.get('host') + '/products/' + id
             }
         });
     })
@@ -141,7 +141,7 @@ exports.products_delete_product = (req, res, next) => {
                  message: 'Product Deleted',
                  request: {
                      type: 'POST',
-                     url: 'http://localhost:3000/products',
+                     url: req.protocol + '://' + req.get('host') + '/products',
                      data: {name: 'String', price: 'Number'}
                  }
              });

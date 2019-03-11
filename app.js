@@ -19,7 +19,7 @@ const customerRoutes = require('./api/routes/customers');
 //hard coding for now
 mongoose.connect(
 	"mongodb+srv://noderestshop1:" +
-	"noderestshop1" + //process.env.MONGO_DB_ACCESS_KEY +
+	process.env.MONGO_DB_ACCESS_KEY +
 	"@cluster0-irxqm.mongodb.net/test?retryWrites=true",
 	{
 		useNewUrlParser: true	
