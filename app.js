@@ -14,9 +14,7 @@ const userRoutes = require('./api/routes/users');
 const searchRoutes = require('./api/routes/search');
 const itineraryRoutes = require('./api/routes/itineraries');
 const customerRoutes = require('./api/routes/customers');
-//TODO db should be ENV pass & user & connection string
-//process.env.MONGO_ATLAS_PW
-//hard coding for now
+
 mongoose.connect(
 	"mongodb+srv://noderestshop1:" +
 	process.env.MONGO_DB_ACCESS_KEY +
